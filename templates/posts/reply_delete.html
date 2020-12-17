@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block link %} 
+	<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+{% endblock %}
+
+{% load humanize %}
+{% block head %} | Delete Reply? {% endblock %}
+
+{% block body %}
+	<div align="center" class="container mt-5">
+		<div class="col-md-6 mt-5">
+			<div class="card">
+				<div class="card-body text-center">
+					<h2 style="font-family: 'Lobster', cursive;">Are you sure you want to delete your comment on <div style="color: purple;">{{ object.parent.parent.title|title }}<span style="color: black;"> ?</span></div></h2>
+				</div>
+				<div class="card-footer">
+					<form method="POST">
+						{% csrf_token %}
+						<input type="submit" class="btn btn-outline-danger float-left" value="Confirm" style="width: 8rem !important; margin-left: 20%;">
+						<a href='{% url "detail" object.parent.parent.id %}' class="btn btn-outline-warning float-right" style="width: 8rem !important; margin-right: 20%;">Cancel</a>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

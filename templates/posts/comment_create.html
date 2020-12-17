@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block link %} 
+	<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% load humanize %}
+{% block head %} 
+	{% if object %}
+		| Edit Comment 
+	{% else %}
+		| Add Comment
+	{% endif %}
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5">
+		<div class="card">
+			<div class="card-header text-center">
+				{% if object %}
+					<h2 >Edit Comment</h2>
+				{% else %}
+					<h2>Write a Comment</h2>
+				{% endif %}
+			</div>
+			<div class="card-body">
+				<form method="POST">
+					{% csrf_token %}
+					
+					{% for field in form %}
+						<div class="form-group">
+							<div class="text-muted">{{ field.label_tag | title }}</div>
+                            {% if object %}
+								{{ field|as_crispy_field }}
+							{% else %}
+                            	{{ field }}
+                            {% endif %}
+						</div>
+					{% endfor %}
+					
+					{% if object %}
+						<input type="submit" class="btn btn-block btn-outline-warning mb-2" id="submit" value="Save Changes">
+						<style>
+							.requiredField, .asteriskField {
+								display: none;
+							}
+						</style>
+					{% else %}
+                    	<input type="submit" class="btn btn-block btn-outline-primary mb-2" id="submit" value="Submit">
+                    {% endif %}				
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

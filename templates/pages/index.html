@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block head%} | Home {% endblock %}
+
+{% block body %}
+    {% include 'partials/_alerts.html' %}
+	<div class="container mt-5">
+	    <div class="jumbotron mt-5">
+		    <h1 class="display-4">Welcome to my Blog!</h1>
+		    <p class="lead">
+		    	Here are a few community guidelines and random info you may need to get started on the platform:
+		    </p>
+		    <ul class="lead">
+		    	<li>You can view any article without registering, but you need to login to view list of users or dashboards of other users, make comments or create articles.</li>
+		    	<li>To register, a unique username and email are needed. Appropriate error messages will appear in case you mess up. Hopefully, you witness the success messages.</li>
+				<li>The fantastic functionality of tagging users with the @ symbol has been implemented. Keeping that in mind, the usernames are only allowed to have alphanumeric characters.</li>
+				<li>The passwords are extremely secure, even the admins cannot access them, so please keep your login information safe. In case you lose the password, the admin can change your password, however <strong>the lost password cannot be retreived</strong>.</li>
+				<li>To beautify your posts, you can use HTML to markup your text. Appropriate code has been implemented to identify and render any HTML in your post.</li>
+				<li>Please refrain from using offensive words or comments. Failure to do so may result in permanent ban and loss of all articles and comments on the forum.</li>
+		    </ul>
+		    <hr class="my-4">
+		    <p class="lead">
+		     	<a class="btn btn-primary btn-lg" href='{% url "list" %}' role="button">Check out the Articles</a>
+		    </p>
+	  	</div>
+	  </div>
+{% endblock %}

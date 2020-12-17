@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block link %} 
+	<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+{% endblock %}
+
+{% load humanize %}
+{% block head %} | {{ post.title|title }} {% endblock %}
+
+{% block body %}
+	{% include 'partials/_alerts.html' %}
+	<div class="container mt-5 mb-5">
+		<div class="card mb-3">
+			<div class="card-header text-center">
+				<div style="font-family: 'sans-serif">
+					<div class="float-left mt-2">
+						<a href='{% url "dashboard" post.author.account.id %}' style="text-decoration: none; color: black; font-size: 1.2rem;"><img class="mr-3" src="{{ post.author.account.profile_pic.url }}" alt="" style="height: 3rem; border-radius: 50%;">{{ post.author }}</a>
+					</div>
+				</div>
+
+				<div>
+					<h1>{{ post.title|title }}</h1>
+					<span class="float-right" style="font-family: 'sans-serif">{{ post.published|naturaltime }}</span>
+				</div>
+			</div>
+			<div class="card-body">
+				{% autoescape off %}
+					{{ post.content|linebreaksbr }}
+				{% endautoescape %}
+			</div>
+			{% ifequal request.user post.author %}
+				<div class="card-footer">
+					<a href='{% url "delete_post" post.id %}' class="btn btn-outline-danger float-right" style="width: 8rem !important;">Delete</a>
+					<a href='{% url "edit_post" post.id %}' class="btn btn-outline-warning float-left" style="width: 8rem !important;">Edit</a>
+				</div>
+			{% endifequal %}
+		</div>
+	</div>
+	
+
+	<div class="container mt-5">
+		<div class="card mb-3">
+			<div class="card-header" style="font-family: sans-serif;">
+				<a href='{% url "create_comment" post.id %}' class="btn btn-info float-right mt-1" style="width: 8rem !important;">Comment</a>
+				<h2 class="ml-3">Comments</h2>
+			</div>
+			<div class="card-body">
+				{% if post.comments.all %}
+					{% for comment in post.comments.all|dictsortreversed:"published" %}
+						<div class="card mt-3">
+							<div class="card-header" style="background: #042685; color: white;">
+								<a href='{% url "create_reply" comment.id %}' class="btn btn-warning float-right" style="font-family: sans-serif; width: 6rem !important;">Reply</a>
+								<a href='{% url "dashboard" comment.author.account.id %}' style="text-decoration: none; color:white;"><img class="mr-2" src="{{ comment.author.account.profile_pic.url }}" alt="" style="height: 1.5rem; border-radius: 50%;">{{ comment.author }}</a>
+								<div>
+									<small style="font-family: 'sans-serif">{{ comment.published|naturaltime }}</small>
+								</div>
+							</div>
+							<div class="card-body">
+								{% autoescape off %}
+									{{ comment.content|linebreaksbr }}
+								{% endautoescape %}
+							</div>
+							{% ifequal request.user comment.author %}
+								<div class="card-footer">
+									<a href='{% url "delete_comment" comment.id %}' class="btn btn-outline-danger float-right" style="width: 6rem !important;">Delete</a>
+									<a href='{% url "edit_comment" comment.id %}' class="btn btn-outline-warning float-left" style="width: 6rem !important;">Edit</a>
+								</div>
+							{% endifequal %}
+						</div>
+						{% if comment.replies.all %}
+							{% for reply in comment.replies.all|dictsort:"published" %}
+								<div class="card mt-1" style="margin-left: 5rem;">
+									<div class="card-header" style="background: #fa3725; color: white;">
+										<a href='{% url "create_reply" comment.id %}' class="btn btn-warning float-right" style="font-family: sans-serif; width: 6rem !important;">Reply</a>
+										<a href='{% url "dashboard" reply.author.account.id %}' style="text-decoration: none; color:white;"><img class="mr-2" src="{{ reply.author.account.profile_pic.url }}" alt="" style="height: 1.5rem; border-radius: 50%;">{{ reply.author }}</a>
+										<div>
+											<small style="font-family: 'sans-serif">{{ reply.published|naturaltime }}</small>
+										</div>
+									</div>
+									<div class="card-body">
+										{% autoescape off %}
+											{{ reply.content|linebreaksbr }}
+										{% endautoescape %}
+									</div>
+									{% ifequal request.user reply.author %}
+										<div class="card-footer">
+											<a href='{% url "delete_reply" reply.id %}' class="btn btn-outline-danger float-right" style="width: 6rem !important;">Delete</a>
+											<a href='{% url "edit_reply" reply.id %}' class="btn btn-outline-warning float-left" style="width: 6rem !important;">Edit</a>
+										</div>
+									{% endifequal %}
+								</div>
+							{% endfor %}
+						{% endif %}
+					{% endfor %}
+				{% else %}
+					<div class="text-center">
+						<em>It's lonely in here... Add a Comment!!</em>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

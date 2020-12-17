@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block link %} 
+	<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+{% endblock %}
+
+{% block head %} | All Users {% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="form-group">
+			<input id="search" class="form-control" type="text" placeholder="Search user">
+		</div>
+		<div class="row">
+			{% for account in accounts %}
+				<div class="col-md-6 mt-5">
+					<div class="card">
+					  	<div class="card-body">
+					    	<h2 class="card-title" style="font-family: 'Lobster', cursive">
+					    		<img class="mr-3" src='{{ account.profile_pic.url }}' style="width: 4rem; border-radius: 50%;"> {{ account }}
+					    	</h2>
+					    	<a href='{% url "dashboard" account.id %}' class="btn btn-block btn-outline-danger">Visit Profile</a>
+					  	</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
+
+{% block script %}
+	<script>
+		jQuery('#search').on('keyup', (e) => {
+			const search = e.target.value.toLowerCase();
+			Array.from(jQuery('.card-title')).forEach(post => {
+				if(post.textContent.toLowerCase().indexOf(search) === -1){
+					post.parentElement.parentElement.parentElement.style.display = 'none';
+				}else{
+					post.parentElement.parentElement.parentElement.style.display = 'block';
+				}
+			})
+		})
+	</script>
+{% endblock %} 

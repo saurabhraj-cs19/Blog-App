@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block head %} | Edit {{ object }} {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+    <!-- Alerts -->
+    {% include 'partials/_alerts.html' %}
+    <div id="container" class="container mb-5">
+        <div class="card mx-auto mt-5">
+            <div class="card-header mb-3">
+                <h1 class="text-center">Registration Portal</h1>
+            </div>
+            <div class="card-body">
+                <!-- Form -->
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %} 
+
+                    {% for field in form %}
+                        <div class="form-group">
+                            <div class="text-muted">{{ field.label_tag }}</div>
+                            {{ field|as_crispy_field }}
+                        </div>
+                    {% endfor %}
+
+                    <input type="submit" class="btn btn-block btn-outline-primary mb-2" id="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .requiredField, .asteriskField {
+            display: none;
+        }
+        input[type=checkbox]{
+            display: none;
+        }
+        label{
+            display: none;
+        }
+        .text-muted label{
+            display: block;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block link %} 
+    <link rel="stylesheet" href="{% static 'pages/css/style.min.css' %}"> 
+{% endblock %}
+
+{% block head%} | {{ account.user }} {% endblock %}
+
+{% block body %}
+    <!-- Alerts -->
+    {% include 'partials/_alerts.html' %}
+    <div class="container mt-5">
+        <div class="card mb-3" style="height: 15rem !important">
+            <div class="row no-gutters" style="height: 100%">
+                <div align="center" class="col-md-4" style="height: 100%">
+                    <img class="card-img" src="{{ account.profile_pic.url }}" alt="">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        {% ifequal request.user account.user %}
+                            <a href='{% url "edit_account" request.user.account.id %}' class='float-right btn btn-outline-warning' style="width: 10rem;">Edit Account</a>
+                        {% endifequal %}
+                        {% if account.portfolio %}
+                            <a href="{{ account.portfolio }}" class='float-right btn btn-outline-danger' style="width: 10rem;">Portfolio</a>
+                        {% endif %}
+                        <h2 class="card-title mb-4" id="login">{{ account }}</h2>
+                        {% if account.user.posts.all %}
+                            Author of:
+                            <ul>
+                                {% for post in account.user.posts.all %}
+                                    <li><a href='{% url "detail" post.id %}' style="text-decoration: none; color: purple; font-family: sans-serif;">{{ post.title|title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %} 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

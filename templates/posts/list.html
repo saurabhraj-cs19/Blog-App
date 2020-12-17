@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block link %} 
+	<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+{% endblock %}
+
+{% block head %} | All Posts {% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="form-group">
+			<input id="search" class="form-control" type="text" placeholder="Search article">
+		</div>
+		<div class="row">
+			{% include 'partials/_alerts.html' %}
+			{% for post in posts %}
+				<div class="col-md-6 mt-5">
+					<div class="card">
+					  	<div class="card-header">
+							<a href='{% url "dashboard" post.author.account.id %}' style="text-decoration: none; color: black; font-family: sans-serif;"><img class="mr-3" src="{{ post.author.account.profile_pic.url }}" alt="" style="height: 2rem; border-radius: 50%;">{{ post.author }}</a>
+					  	</div>
+					  	<div class="card-body">
+					    	<h2 class="card-title" style="font-family: 'Lobster', cursive">{{ post.title|title }}</h2>
+					    	<p class="card-text">
+					    		<a href='{% url "detail" post.id %}' style="text-decoration: none; color: black; font-family: sans-serif;">{{ post.content|truncatewords:5 }}</a>
+					    	</p>
+					    	<a href='{% url "detail" post.id %}' class="btn btn-block btn-outline-danger">Read More</a>
+					  	</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
+
+{% block script %}
+	<script>
+		jQuery('#search').on('keyup', (e) => {
+			const search = e.target.value.toLowerCase();
+			Array.from(jQuery('.card-title')).forEach(post => {
+				if(post.textContent.toLowerCase().indexOf(search) === -1){
+					post.parentElement.parentElement.parentElement.style.display = 'none';
+				}else{
+					post.parentElement.parentElement.parentElement.style.display = 'block';
+				}
+			})
+		})
+	</script>
+{% endblock %}

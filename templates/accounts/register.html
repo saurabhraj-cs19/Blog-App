@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block head %} | Register {% endblock %}
+
+{% block body %}
+    <div id="container" class="container mb-5">
+        <div class="card mx-auto mt-5">
+            <div class="card-header mb-3">
+                <h1 class="text-center">Registration Portal</h1>
+            </div>
+            <div class="card-body">
+                <!-- Alerts -->
+                {% include 'partials/_alerts.html' %}
+                <!-- Form -->
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %} 
+                    {% for field in user %}
+                        <div class="form-group">
+                            <div class="text-muted">{{ field.label_tag | title }}</div>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                
+                    <div class="form-group">
+                        <div class="text-muted">Confirm Password:</div>
+                        <input type="password" name="confirm" class="form-control">
+                    </div>
+
+                    {% for field in account %}
+                        <div class="form-group">
+                            <div class="text-muted">{{ field.label_tag }}</div>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+
+                    <input type="submit" class="btn btn-block btn-outline-primary mb-2" id="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

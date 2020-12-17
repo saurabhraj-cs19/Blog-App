@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block link %} 
+	<link rel="stylesheet" href="{% static 'pages/css/style.min.css' %}"> 
+{% endblock %}
+
+{% block head%} | About Me {% endblock %}
+
+{% block body %}
+    {% include 'partials/_alerts.html' %}
+    <div class="container mt-5">
+        <div class="card mb-3" style="height: 15rem !important">
+            <div class="row no-gutters" style="height: 100%">
+                <div align="center" class="col-md-4" style="height: 100%">
+                    <img class="card-img" src="{% static 'images/Yash.jpeg' %}" alt="">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4" id="login">Uchika's Blog</h2>
+                        <p class="mb-4 lead">This blog was created by me, Yash Sanjeev, out of sheer boredom. Hope you enjoy the time you spend here among quality posts</p>
+                        <hr class="my-4">
+                        <p class="mb-4">You can contact me through <a href="https://www.facebook.com/yash.sanjeev.12">Facebook</a> or <a href="https://www.instagram.com/yashsanjeev4/?hl=en">Instagram</a></p> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
