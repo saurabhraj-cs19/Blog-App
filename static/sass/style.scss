@@ -1,0 +1,61 @@
+@import 'variables';
+
+body{
+    background: $back-color;
+}
+
+nav{
+    background-color: $cream-color;
+    background: $navbar-color;
+    border-bottom: 4px solid $cream-color;
+
+    #brand{
+        height: 3rem;
+        margin-left: 4rem;
+    }
+
+    #profile{
+        height: 2rem;
+        margin-right: 0.5rem;
+        border-radius: 50%;
+    }
+
+    .ml-auto{
+        margin-right: 6rem;
+    }
+    
+    .nav-link{
+        margin-right: 2rem;
+        color: #fefefe;
+    }
+        
+    .nav-link:hover{
+        color: black !important;
+    }
+
+    .navbar-brand:hover{
+        color: black !important;
+    }
+}
+
+#container{
+    margin-top: 5rem;
+    border: none;
+    background: $back-color;
+    width: calc(min(32em, 100%));
+    border-radius: 1em;
+}
+
+.card{
+    border-radius: 1em;
+
+    .card-header{
+        background: $header-color;
+        font-family: 'Lobster', cursive;
+        font-size: 1em;
+    }
+
+    input{
+        width: 100% !important;
+    }
+}

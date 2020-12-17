@@ -1,0 +1,10 @@
+@import 'variables';
+
+.container{
+	width: 60% !important;
+	background: $back-color;
+
+	.card{
+		background: $cream-color;
+	}
+}
